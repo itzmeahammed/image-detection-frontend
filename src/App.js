@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import GoogleMapsTraffic from "./components/googlemap";
+import LoginSignup from "./components/loginSignup";
+import { Routes, Route } from "react-router-dom";
+import Sidebar from "./components/sidebar";
+import DragDropUpload from "./components/dragDropUpload";
+import { useLocation } from "react-router-dom";
 
 function App() {
+  const path = useLocation();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {path?.pathname != "/" && <Sidebar />}
+      <Routes>
+        <Route path='/' element={<LoginSignup />} />
+        <Route path='/upload' element={<DragDropUpload />} />
+        <Route path='/map' element={<GoogleMapsTraffic />} />
+      </Routes>
+    </>
   );
 }
 
