@@ -3,6 +3,7 @@ import { useDropzone } from "react-dropzone";
 import { IMAGE_UPLOAD_URL } from "../helper/apiurls";
 import Cookies from "js-cookie";
 import GifModal from "./loader";
+import SuccessTick from "../assets/gif/successtick.gif";
 import {
   TextField,
   Button,
@@ -22,6 +23,7 @@ const DragDropUploadForm = () => {
   });
   const [invoiceData, setInvoiceData] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false); // ✅ new state
 
   const token = Cookies.get("token");
 
@@ -83,20 +85,28 @@ const DragDropUploadForm = () => {
     <Paper
       elevation={3}
       sx={{
-        width: 400,
+        width: 900,
         margin: "auto",
         padding: 3,
         textAlign: "center",
         borderRadius: 2,
+        height: 600,
+        marginLeft: "13%",
+        overflowY: "auto",
       }}
     >
-      <Typography variant='h5' sx={{ marginBottom: 2, fontWeight: "bold" }}>
+      <Typography variant='h5' sx={{ marginBottom: 1, fontWeight: "bold" }}>
         Report Traffic Violation
       </Typography>
 
       <form
         onSubmit={handleUpload}
-        style={{ display: "flex", flexDirection: "column", gap: 15 }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 15,
+          height: "fit-content",
+        }}
       >
         <TextField
           label='Name'
@@ -120,27 +130,38 @@ const DragDropUploadForm = () => {
           InputLabelProps={{ shrink: true }}
         />
 
-        <Box
-          {...getRootProps()}
-          sx={{
-            border: "2px dashed #aaa",
-            padding: 2,
-            borderRadius: 2,
-            cursor: "pointer",
-            textAlign: "center",
-          }}
-        >
-          <input {...getInputProps()} />
-          <Typography variant='body2'>
-            Drag & drop an image here, or click to select one
-          </Typography>
-        </Box>
+        {!preview && (
+          <Box
+            {...getRootProps()}
+            sx={{
+              border: "2px dashed #aaa",
+              // padding: 2,
+              // borderRadius: 2,
+              cursor: "pointer",
+              textAlign: "center",
+              padding: "16px",
+              borderRadius: "8px",
+              height: "250px",
+              width: "100%",
+              // cursor: "pointer",
+              texAalign: "center",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <input {...getInputProps()} />
+            <Typography variant='body2'>
+              Drag & drop an image here, or click to select one
+            </Typography>
+          </Box>
+        )}
 
         {preview && (
           <img
             src={preview}
             alt='Preview'
-            style={{ width: "100%", marginTop: 10, borderRadius: 5 }}
+            style={{ width: "64%", marginTop: 10, borderRadius: 5 }}
           />
         )}
 
@@ -266,12 +287,55 @@ const DragDropUploadForm = () => {
                     backgroundColor: "#001830",
                   },
                 }}
-                onClick={() => setOpenModal(false)}
+                onClick={() => {
+                  setOpenModal(false);
+                  setShowSuccessModal(true);
+                  setTimeout(() => {
+                    setShowSuccessModal(false);
+                  }, 3000);
+                }}
               >
-                Close
+                Submit
               </Button>
             </Box>
           </Paper>
+        </Box>
+      </Modal>
+
+      <Modal open={showSuccessModal}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+            backgroundColor: "rgba(0,0,0,0.4)",
+          }}
+        >
+          <Box
+            sx={{
+              backgroundColor: "#fff",
+              padding: 4,
+              borderRadius: 3,
+              boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <img
+              src={SuccessTick}
+              alt='Success'
+              style={{ width: 150, height: 150 }}
+            />
+            <Typography
+              variant='h6'
+              sx={{ marginTop: 2, fontWeight: 500, color: "#4caf50" }}
+            >
+              Report Submitted Successfully!
+            </Typography>
+          </Box>
         </Box>
       </Modal>
     </Paper>
