@@ -3,10 +3,8 @@ import "../styles/sidebar.css";
 import { Link } from "react-router-dom";
 import TrafficLogo from "../assets/images/trafficLogo.png";
 import UploadIcon from "../assets/svg/uploadIcon.svg";
-<<<<<<< HEAD
-=======
 import GuideIcon from "../assets/images/manual-book.png";
->>>>>>> 604facc (changes)
+import FineIcon from "../assets/images/fine.png";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
@@ -36,23 +34,20 @@ const Sidebar = () => {
           />
           <Link to='/map'>Traffic map</Link>
         </div>
-<<<<<<< HEAD
-=======
 
         <div className='sidebar-body-item d-flex gap-8'>
           <img src={GuideIcon} alt='' width={24} height={24} />
           <Link to='/guide'>Traffic guidelines</Link>
         </div>
->>>>>>> 604facc (changes)
+        <div className='sidebar-body-item d-flex gap-8'>
+          <img src={FineIcon} alt='' width={24} height={24} />
+          <Link to='/fine'>Fine and Payment</Link>
+        </div>
         <div className='sidebar-body-item d-flex gap-8'>
           <img src={UploadIcon} alt='' width={24} height={24} />
           <Link to='/upload'>Report Traffic Violation</Link>
         </div>
       </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> 604facc (changes)
       <div className='sidebar-footer d-flex-full p-16'>
         <button onClick={handleSignOut}>Sign out</button>
       </div>

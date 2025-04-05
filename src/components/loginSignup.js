@@ -12,6 +12,7 @@ export default function AuthForm() {
     email: "",
     number: "",
     password: "",
+    vehicleNumber: "",
   });
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
@@ -20,6 +21,9 @@ export default function AuthForm() {
     let newErrors = {};
     if (isSignUp && !formData.name.trim()) {
       newErrors.name = "Name is required";
+    }
+    if (isSignUp && !formData.vehicleNumber.trim()) {
+      newErrors.vehicleNumber = "Vehicle number is required";
     }
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
@@ -46,6 +50,7 @@ export default function AuthForm() {
           email: formData.email,
           number: formData.number,
           password: formData.password,
+          vehicleNumber: formData.vehicleNumber,
         }
       : { email: formData.email, password: formData.password };
 
@@ -74,7 +79,6 @@ export default function AuthForm() {
 
   return (
     <div className={`container ${isSignUp ? "right-panel-active" : ""}`}>
-      {/* Sign-Up Form */}
       <div className='form-container sign-up-container'>
         <form onSubmit={handleSubmit}>
           <h1>Create Account</h1>
@@ -103,6 +107,18 @@ export default function AuthForm() {
               setFormData({ ...formData, number: e.target.value })
             }
           />
+          {errors.vehicleNumber && (
+            <small className='error'>{errors.vehicleNumber}</small>
+          )}
+          <input
+            type='text'
+            placeholder='Vehicle Number'
+            value={formData.vehicleNumber}
+            onChange={(e) =>
+              setFormData({ ...formData, vehicleNumber: e.target.value })
+            }
+          />
+
           {errors.email && <small className='error'>{errors.email}</small>}
           <input
             type='password'
@@ -144,13 +160,11 @@ export default function AuthForm() {
           {errors.password && (
             <small className='error'>{errors.password}</small>
           )}
-          {/* <a href='#'>Forgot your password?</a> */}
           <button type='submit'>Sign In</button>
           {message && <p className='message'>{message}</p>}
         </form>
       </div>
 
-      {/* Overlay */}
       <div className='overlay-container'>
         <div className='overlay'>
           <div className='overlay-panel overlay-left'>

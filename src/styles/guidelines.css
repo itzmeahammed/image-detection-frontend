@@ -12,8 +12,14 @@
   border-radius: 8px;
   text-wrap: wrap;
   width: 350px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
+.traffic-sign-main-container .traffic-sign-container:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
 .traffic-sign-main-container .traffic-sign-container img {
   border-radius: 8px;
 }

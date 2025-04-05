@@ -6,6 +6,7 @@ import Sidebar from "./components/sidebar";
 import DragDropUpload from "./components/dragDropUpload";
 import { useLocation } from "react-router-dom";
 import Guidelines from "./components/guidelines";
+import FineAndPayment from "./components/fineAndPayment";
 
 function App() {
   const path = useLocation();
@@ -18,6 +19,7 @@ function App() {
         <Route path='/upload' element={<DragDropUpload />} />
         <Route path='/map' element={<GoogleMapsTraffic />} />
         <Route path='/guide' element={<Guidelines />} />
+        <Route path='/fine' element={<FineAndPayment />} />
       </Routes>
     </>
   );
