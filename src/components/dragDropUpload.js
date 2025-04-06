@@ -65,7 +65,8 @@ const DragDropUploadForm = () => {
         name: formData.name,
         violationDate: formData.violationDate,
         imageUrl: preview,
-        result: result?.result,
+        message: result?.result?.message,
+        vehicle_number: result?.result?.vehicle_number,
       });
       setOpenModal(true);
     } catch (error) {
@@ -82,263 +83,276 @@ const DragDropUploadForm = () => {
   });
 
   return (
-    <Paper
-      elevation={3}
-      sx={{
-        width: 900,
-        margin: "auto",
-        padding: 3,
-        textAlign: "center",
-        borderRadius: 2,
-        height: 600,
-        marginLeft: "13%",
-        overflowY: "auto",
-      }}
+    <div
+      className='d-flex-full w-100'
+      style={{ height: "100vh", marginLeft: "13%" }}
     >
-      <Typography variant='h5' sx={{ marginBottom: 1, fontWeight: "bold" }}>
-        Report Traffic Violation
-      </Typography>
-
-      <form
-        onSubmit={handleUpload}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 15,
-          height: "fit-content",
+      <Paper
+        elevation={3}
+        sx={{
+          width: 900,
+          margin: "auto",
+          padding: 3,
+          textAlign: "center",
+          borderRadius: 2,
+          height: 600,
+          marginLeft: "13%",
+          overflowY: "auto",
         }}
       >
-        <TextField
-          label='Name'
-          name='name'
-          value={formData.name}
-          onChange={handleChange}
-          variant='outlined'
-          fullWidth
-          required
-        />
+        <Typography variant='h5' sx={{ marginBottom: 1, fontWeight: "bold" }}>
+          Report Traffic Violation
+        </Typography>
 
-        <TextField
-          label='Violation Date'
-          type='date'
-          name='violationDate'
-          value={formData.violationDate}
-          onChange={handleChange}
-          variant='outlined'
-          fullWidth
-          required
-          InputLabelProps={{ shrink: true }}
-        />
+        <form
+          onSubmit={handleUpload}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 15,
+            height: "fit-content",
+          }}
+        >
+          <TextField
+            label='Name'
+            name='name'
+            value={formData.name}
+            onChange={handleChange}
+            variant='outlined'
+            fullWidth
+            required
+          />
 
-        {!preview && (
+          <TextField
+            label='Violation Date'
+            type='date'
+            name='violationDate'
+            value={formData.violationDate}
+            onChange={handleChange}
+            variant='outlined'
+            fullWidth
+            required
+            InputLabelProps={{ shrink: true }}
+          />
+
+          {!preview && (
+            <Box
+              {...getRootProps()}
+              sx={{
+                border: "2px dashed #aaa",
+                // padding: 2,
+                // borderRadius: 2,
+                cursor: "pointer",
+                textAlign: "center",
+                padding: "16px",
+                borderRadius: "8px",
+                height: "250px",
+                width: "100%",
+                // cursor: "pointer",
+                texAalign: "center",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <input {...getInputProps()} />
+              <Typography variant='body2'>
+                Drag & drop an image here, or click to select one
+              </Typography>
+            </Box>
+          )}
+
+          {preview && (
+            <img
+              src={preview}
+              alt='Preview'
+              style={{ width: "64%", marginTop: 10, borderRadius: 5 }}
+            />
+          )}
+
+          <Button
+            type='submit'
+            variant='contained'
+            color='primary'
+            sx={{ marginTop: 2 }}
+          >
+            Submit Report
+          </Button>
+        </form>
+
+        <GifModal isLoading={isLoading} setisLoading={setIsLoading} />
+
+        <Modal open={openModal} onClose={() => setOpenModal(false)}>
           <Box
-            {...getRootProps()}
             sx={{
-              border: "2px dashed #aaa",
-              // padding: 2,
-              // borderRadius: 2,
-              cursor: "pointer",
-              textAlign: "center",
-              padding: "16px",
-              borderRadius: "8px",
-              height: "250px",
-              width: "100%",
-              // cursor: "pointer",
-              texAalign: "center",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              minHeight: "100vh",
+              backgroundColor: "rgba(0,0,0,0.6)",
             }}
           >
-            <input {...getInputProps()} />
-            <Typography variant='body2'>
-              Drag & drop an image here, or click to select one
-            </Typography>
-          </Box>
-        )}
-
-        {preview && (
-          <img
-            src={preview}
-            alt='Preview'
-            style={{ width: "64%", marginTop: 10, borderRadius: 5 }}
-          />
-        )}
-
-        <Button
-          type='submit'
-          variant='contained'
-          color='primary'
-          sx={{ marginTop: 2 }}
-        >
-          Submit Report
-        </Button>
-      </form>
-
-      <GifModal isLoading={isLoading} setisLoading={setIsLoading} />
-
-      <Modal open={openModal} onClose={() => setOpenModal(false)}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "100vh",
-            backgroundColor: "rgba(0,0,0,0.6)",
-          }}
-        >
-          <Paper
-            elevation={6}
-            sx={{
-              width: 450,
-              padding: 3,
-              borderRadius: 4,
-              backgroundColor: "#ffffff",
-              boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.2)",
-              display: "flex",
-              flexDirection: "column",
-              gap: "8px",
-            }}
-          >
-            <Box
+            <Paper
+              elevation={6}
               sx={{
-                backgroundColor: "#002147",
-                color: "#ffffff",
-                textAlign: "center",
-                padding: "14px",
-                borderRadius: "8px 8px 0 0",
-              }}
-            >
-              <Typography
-                variant='h5'
-                sx={{ fontWeight: 500, letterSpacing: 0.8 }}
-              >
-                Violation Invoice
-              </Typography>
-            </Box>
-
-            <Box>
-              <Box
-                sx={{
-                  backgroundColor: "#f9f9f9",
-                  padding: "15px",
-                  borderRadius: "8px",
-                  border: "1px solid #ddd",
-                }}
-              >
-                <Typography
-                  variant='h6'
-                  sx={{ fontWeight: "bold", color: "#333", marginBottom: 1 }}
-                >
-                  Violation Details
-                </Typography>
-
-                <Box sx={{ marginBottom: 1 }}>
-                  <Typography variant='body1'>
-                    <strong>Reported By: &nbsp; </strong> {invoiceData?.name}
-                  </Typography>
-
-                  <Typography variant='body1'>
-                    <strong>Date:</strong> &nbsp; {invoiceData?.violationDate}
-                  </Typography>
-                  <Typography variant='body1'>
-                    <strong>Violation Details: &nbsp; </strong>
-                    {invoiceData?.result}
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-
-            {invoiceData?.imageUrl && (
-              <Box
-                sx={{ display: "flex", justifyContent: "center", marginTop: 1 }}
-              >
-                <img
-                  src={invoiceData.imageUrl}
-                  alt='Violation'
-                  style={{
-                    width: "100%",
-                    maxWidth: "260px",
-                    borderRadius: "8px",
-                    boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.15)",
-                  }}
-                />
-              </Box>
-            )}
-
-            <Box
-              sx={{
+                width: 450,
+                padding: 3,
+                borderRadius: 4,
+                backgroundColor: "#ffffff",
+                boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.2)",
                 display: "flex",
-                justifyContent: "flex-end",
-                marginTop: 2,
-                alignSelf: "center",
+                flexDirection: "column",
+                gap: "8px",
               }}
             >
-              <Button
-                variant='contained'
+              <Box
                 sx={{
                   backgroundColor: "#002147",
                   color: "#ffffff",
-                  fontWeight: "bold",
-                  textTransform: "none",
-                  borderRadius: "6px",
-                  padding: "8px 20px",
-                  "&:hover": {
-                    backgroundColor: "#001830",
-                  },
-                }}
-                onClick={() => {
-                  setOpenModal(false);
-                  setShowSuccessModal(true);
-                  setTimeout(() => {
-                    setShowSuccessModal(false);
-                  }, 3000);
+                  textAlign: "center",
+                  padding: "14px",
+                  borderRadius: "8px 8px 0 0",
                 }}
               >
-                Submit
-              </Button>
-            </Box>
-          </Paper>
-        </Box>
-      </Modal>
+                <Typography
+                  variant='h5'
+                  sx={{ fontWeight: 500, letterSpacing: 0.8 }}
+                >
+                  Violation Invoice
+                </Typography>
+              </Box>
 
-      <Modal open={showSuccessModal}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "100vh",
-            backgroundColor: "rgba(0,0,0,0.4)",
-          }}
-        >
+              <Box>
+                <Box
+                  sx={{
+                    backgroundColor: "#f9f9f9",
+                    padding: "15px",
+                    borderRadius: "8px",
+                    border: "1px solid #ddd",
+                  }}
+                >
+                  <Typography
+                    variant='h6'
+                    sx={{ fontWeight: "bold", color: "#333", marginBottom: 1 }}
+                  >
+                    Violation Details
+                  </Typography>
+
+                  <Box sx={{ marginBottom: 1 }}>
+                    <Typography variant='body1'>
+                      <strong>Reported By: &nbsp; </strong> {invoiceData?.name}
+                    </Typography>
+
+                    <Typography variant='body1'>
+                      <strong>Date:</strong> &nbsp; {invoiceData?.violationDate}
+                    </Typography>
+                    <Typography variant='body1'>
+                      <strong>Vehicle Number: &nbsp; </strong>
+                      {invoiceData?.vehicle_number}
+                    </Typography>
+                    <Typography variant='body1'>
+                      <strong>Violation Details: &nbsp; </strong>
+                      {invoiceData?.message}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+
+              {invoiceData?.imageUrl && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: 1,
+                  }}
+                >
+                  <img
+                    src={invoiceData.imageUrl}
+                    alt='Violation'
+                    style={{
+                      width: "100%",
+                      maxWidth: "260px",
+                      borderRadius: "8px",
+                      boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.15)",
+                    }}
+                  />
+                </Box>
+              )}
+
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  marginTop: 2,
+                  alignSelf: "center",
+                }}
+              >
+                <Button
+                  variant='contained'
+                  sx={{
+                    backgroundColor: "#002147",
+                    color: "#ffffff",
+                    fontWeight: "bold",
+                    textTransform: "none",
+                    borderRadius: "6px",
+                    padding: "8px 20px",
+                    "&:hover": {
+                      backgroundColor: "#001830",
+                    },
+                  }}
+                  onClick={() => {
+                    setOpenModal(false);
+                    setShowSuccessModal(true);
+                    setTimeout(() => {
+                      setShowSuccessModal(false);
+                    }, 3000);
+                  }}
+                >
+                  Submit
+                </Button>
+              </Box>
+            </Paper>
+          </Box>
+        </Modal>
+
+        <Modal open={showSuccessModal}>
           <Box
             sx={{
-              backgroundColor: "#fff",
-              padding: 4,
-              borderRadius: 3,
-              boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              flexDirection: "column",
+              minHeight: "100vh",
+              backgroundColor: "rgba(0,0,0,0.4)",
             }}
           >
-            <img
-              src={SuccessTick}
-              alt='Success'
-              style={{ width: 150, height: 150 }}
-            />
-            <Typography
-              variant='h6'
-              sx={{ marginTop: 2, fontWeight: 500, color: "#4caf50" }}
+            <Box
+              sx={{
+                backgroundColor: "#fff",
+                padding: 4,
+                borderRadius: 3,
+                boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
             >
-              Report Submitted Successfully!
-            </Typography>
+              <img
+                src={SuccessTick}
+                alt='Success'
+                style={{ width: 150, height: 150 }}
+              />
+              <Typography
+                variant='h6'
+                sx={{ marginTop: 2, fontWeight: 500, color: "#4caf50" }}
+              >
+                Report Submitted Successfully!
+              </Typography>
+            </Box>
           </Box>
-        </Box>
-      </Modal>
-    </Paper>
+        </Modal>
+      </Paper>
+    </div>
   );
 };
 

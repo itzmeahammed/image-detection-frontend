@@ -12,7 +12,7 @@ export default function AuthForm() {
     email: "",
     number: "",
     password: "",
-    vehicleNumber: "",
+    vehicle_no: "",
   });
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
@@ -22,8 +22,8 @@ export default function AuthForm() {
     if (isSignUp && !formData.name.trim()) {
       newErrors.name = "Name is required";
     }
-    if (isSignUp && !formData.vehicleNumber.trim()) {
-      newErrors.vehicleNumber = "Vehicle number is required";
+    if (isSignUp && !formData.vehicle_no.trim()) {
+      newErrors.vehicle_no = "Vehicle number is required";
     }
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
@@ -50,7 +50,7 @@ export default function AuthForm() {
           email: formData.email,
           number: formData.number,
           password: formData.password,
-          vehicleNumber: formData.vehicleNumber,
+          vehicle_no: formData.vehicle_no,
         }
       : { email: formData.email, password: formData.password };
 
@@ -61,9 +61,17 @@ export default function AuthForm() {
         body: JSON.stringify(payload),
       });
 
-      const data = await response.json();
+      let data = {};
+      const text = await response.text(); // get raw text first
+
+      try {
+        data = JSON.parse(text); // try parsing
+      } catch (err) {
+        console.warn("Response is not valid JSON:", text);
+      }
+
       if (data?.token) {
-        data?.token && Cookies.set("token", data?.token);
+        Cookies.set("token", data.token);
         navigate("/map");
       }
 
@@ -73,115 +81,120 @@ export default function AuthForm() {
         setMessage(data.error || "Something went wrong");
       }
     } catch (error) {
+      console.error(error);
       setMessage("Server error. Please try again.");
     }
   };
 
   return (
-    <div className={`container ${isSignUp ? "right-panel-active" : ""}`}>
-      <div className='form-container sign-up-container'>
-        <form onSubmit={handleSubmit}>
-          <h1>Create Account</h1>
+    <div className='main-container d-flex-full'>
+      <div className={`container ${isSignUp ? "right-panel-active" : ""}`}>
+        <div className='form-container sign-up-container'>
+          <form onSubmit={handleSubmit}>
+            <h1>Create Account</h1>
 
-          <input
-            type='text'
-            placeholder='Name'
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          />
-          {errors.name && <small className='error'>{errors.name}</small>}
-          <input
-            type='email'
-            placeholder='Email'
-            value={formData.email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
-          />
-          {errors.number && <small className='error'>{errors.number}</small>}
-          <input
-            type='text'
-            placeholder='Mobile'
-            value={formData.number}
-            onChange={(e) =>
-              setFormData({ ...formData, number: e.target.value })
-            }
-          />
-          {errors.vehicleNumber && (
-            <small className='error'>{errors.vehicleNumber}</small>
-          )}
-          <input
-            type='text'
-            placeholder='Vehicle Number'
-            value={formData.vehicleNumber}
-            onChange={(e) =>
-              setFormData({ ...formData, vehicleNumber: e.target.value })
-            }
-          />
+            <input
+              type='text'
+              placeholder='Name'
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+            />
+            {errors.name && <small className='error'>{errors.name}</small>}
+            <input
+              type='email'
+              placeholder='Email'
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+            />
+            {errors.number && <small className='error'>{errors.number}</small>}
+            <input
+              type='text'
+              placeholder='Mobile'
+              value={formData.number}
+              onChange={(e) =>
+                setFormData({ ...formData, number: e.target.value })
+              }
+            />
+            {errors.vehicle_no && (
+              <small className='error'>{errors.vehicle_no}</small>
+            )}
+            <input
+              type='text'
+              placeholder='Vehicle Number'
+              value={formData.vehicle_no}
+              onChange={(e) =>
+                setFormData({ ...formData, vehicle_no: e.target.value })
+              }
+            />
 
-          {errors.email && <small className='error'>{errors.email}</small>}
-          <input
-            type='password'
-            placeholder='Password'
-            value={formData.password}
-            onChange={(e) =>
-              setFormData({ ...formData, password: e.target.value })
-            }
-          />
-          {errors.password && (
-            <small className='error'>{errors.password}</small>
-          )}
-          <button type='submit'>Sign Up</button>
-          {message && <p className='message'>{message}</p>}
-        </form>
-      </div>
+            {errors.email && <small className='error'>{errors.email}</small>}
+            <input
+              type='password'
+              placeholder='Password'
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+            />
+            {errors.password && (
+              <small className='error'>{errors.password}</small>
+            )}
+            <button type='submit'>Sign Up</button>
+            {message && <p className='message'>{message}</p>}
+          </form>
+        </div>
 
-      <div className='form-container sign-in-container'>
-        <form onSubmit={handleSubmit}>
-          <h1>Sign in</h1>
+        <div className='form-container sign-in-container'>
+          <form onSubmit={handleSubmit}>
+            <h1>Sign in</h1>
 
-          <input
-            type='email'
-            placeholder='Email'
-            value={formData.email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
-          />
-          {errors.email && <small className='error'>{errors.email}</small>}
-          <input
-            type='password'
-            placeholder='Password'
-            value={formData.password}
-            onChange={(e) =>
-              setFormData({ ...formData, password: e.target.value })
-            }
-          />
-          {errors.password && (
-            <small className='error'>{errors.password}</small>
-          )}
-          <button type='submit'>Sign In</button>
-          {message && <p className='message'>{message}</p>}
-        </form>
-      </div>
+            <input
+              type='email'
+              placeholder='Email'
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+            />
+            {errors.email && <small className='error'>{errors.email}</small>}
+            <input
+              type='password'
+              placeholder='Password'
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+            />
+            {errors.password && (
+              <small className='error'>{errors.password}</small>
+            )}
+            <button type='submit'>Sign In</button>
+            {message && <p className='message'>{message}</p>}
+          </form>
+        </div>
 
-      <div className='overlay-container'>
-        <div className='overlay'>
-          <div className='overlay-panel overlay-left'>
-            <h1>Welcome Back!</h1>
-            <p>
-              To keep connected with us please login with your personal info
-            </p>
-            <button className='ghost' onClick={() => setIsSignUp(false)}>
-              Sign In
-            </button>
-          </div>
-          <div className='overlay-panel overlay-right'>
-            <h1>Hello, Friend!</h1>
-            <p>Enter your personal details and start journey with us</p>
-            <button className='ghost' onClick={() => setIsSignUp(true)}>
-              Sign Up
-            </button>
+        <div className='overlay-container'>
+          <div className='overlay'>
+            <div className='overlay-panel overlay-left'>
+              <h1>Welcome Back!</h1>
+              <p>
+                To keep connected with us please login with your personal info
+              </p>
+              <button className='ghost' onClick={() => setIsSignUp(false)}>
+                Sign In
+              </button>
+            </div>
+            <div className='overlay-panel overlay-right'>
+              <h1>Hello, Friend!</h1>
+              <p>Enter your personal details and start journey with us</p>
+              <button className='ghost' onClick={() => setIsSignUp(true)}>
+                Sign Up
+              </button>
+            </div>
           </div>
         </div>
       </div>

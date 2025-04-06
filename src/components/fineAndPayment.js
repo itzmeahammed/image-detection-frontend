@@ -1,100 +1,75 @@
-import React, { useState } from "react";
-import QrImage from "../assets/images/qr.jpeg";
+import React, { useEffect, useState } from "react";
+import QrImage from "../assets/images/new_qr.jpeg";
 import "../styles/fineAnPayment.css";
+import { GET_FINE_DETAILS } from "../helper/apiurls";
+import Cookies from "js-cookie";
 
 const FineAndPayment = () => {
-  // Voilatiom , vehicle number , payment amount , date . Qr code .
+  const token = Cookies.get("token");
+
+  const [fineUser, setfineUser] = useState({});
   const [selectedFine, setSelectedFine] = useState(null);
 
-  const fineData = [
-    {
-      violation: "More than 2 people",
-      vehicleNumber: "TN 63 AH 4201",
-      paymentAmount: "1500",
-      Date: "12-01-2004",
-    },
-    {
-      violation: "More than 2 people",
-      vehicleNumber: "TN 63 AH 4201",
-      paymentAmount: "1500",
-      Date: "12-01-2004",
-    },
-    {
-      violation: "More than 2 people",
-      vehicleNumber: "TN 63 AH 4201",
-      paymentAmount: "1500",
-      Date: "12-01-2004",
-    },
-    {
-      violation: "More than 2 people",
-      vehicleNumber: "TN 63 AH 4201",
-      paymentAmount: "1500",
-      Date: "12-01-2004",
-    },
-    {
-      violation: "More than 2 people",
-      vehicleNumber: "TN 63 AH 4201",
-      paymentAmount: "1500",
-      Date: "12-01-2004",
-    },
-    {
-      violation: "More than 2 people",
-      vehicleNumber: "TN 63 AH 4201",
-      paymentAmount: "1500",
-      Date: "12-01-2004",
-    },
-    {
-      violation: "More than 2 people",
-      vehicleNumber: "TN 63 AH 4201",
-      paymentAmount: "1500",
-      Date: "12-01-2004",
-    },
-  ];
+  const getFineDetails = async () => {
+    try {
+      const res = await fetch(GET_FINE_DETAILS, {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      });
+      const data = await res.json();
+
+      setfineUser(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getFineDetails();
+  }, []);
+
   return (
     <>
       <div className='fine-and-payment-main-container d-flex gap-16'>
-        {fineData.map((val, key) => (
-          <div
-            className='fine-details-container d-flex-col gap-16'
-            key={key}
-            onClick={() => setSelectedFine(val)} // ✅ Added click handler
-            style={{ cursor: "pointer" }} // Optional: pointer cursor
-          >
-            <img src={QrImage} width={250} height={250} alt='' />
-            <p>
-              <strong>Violation:</strong> {val?.violation}
-            </p>
-            <p>
-              <strong>Vehicle Number: </strong>
-              {val?.vehicleNumber}
-            </p>
-            <p>
-              <strong>Payment Amount:</strong> {val?.paymentAmount}
-            </p>
-            <p>
-              <strong>Date:</strong> {val?.Date}
-            </p>
-          </div>
-        ))}
+        <div
+          className='fine-details-container d-flex-col gap-16'
+          style={{ cursor: "pointer" }}
+          onClick={() => setSelectedFine(fineUser)}
+        >
+          <img src={QrImage} width={250} height={250} alt='' />
+          <p>
+            <strong>Username:</strong> {fineUser?.username}
+          </p>
+          <p>
+            <strong>Vehicle Number: </strong>
+            {fineUser?.vehicle_no}
+          </p>
+          <p>
+            <strong>Payment Amount:</strong> {fineUser?.fine}
+          </p>
+          <p>
+            <strong>Mobile no:</strong> {fineUser?.number}
+          </p>
+        </div>
       </div>
 
-      {/* ✅ Modal - conditionally shown */}
       {selectedFine && (
         <div className='modal-backdrop' onClick={() => setSelectedFine(null)}>
           <div className='modal-content' onClick={(e) => e.stopPropagation()}>
             <h3>Fine Details</h3>
             <img src={QrImage} width={250} height={250} alt='QR Code' />
             <p>
-              <strong>Violation:</strong> {selectedFine.violation}
+              <strong>Username:</strong> {selectedFine?.username}
             </p>
             <p>
-              <strong>Vehicle Number:</strong> {selectedFine.vehicleNumber}
+              <strong>Vehicle Number:</strong> {selectedFine?.vehicle_no}
             </p>
             <p>
-              <strong>Payment Amount:</strong> {selectedFine.paymentAmount}
+              <strong>Payment Amount:</strong> {selectedFine?.fine}
             </p>
             <p>
-              <strong>Date:</strong> {selectedFine.Date}
+              <strong>Mobile no:</strong> {selectedFine?.number}
             </p>
             <button onClick={() => setSelectedFine(null)}>Close</button>
           </div>

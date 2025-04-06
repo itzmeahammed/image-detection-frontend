@@ -8,13 +8,16 @@
 
 body {
   background: #f6f5f7;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+
   font-family: "Montserrat", sans-serif;
   height: 100vh;
   overflow: hidden;
+}
+.main-container {
+  height: 100vh;
+  width: 100%;
+  background-size: contain;
+  background-image: url(https://www.hdwallpapers.in/download/night_traffic_san_francisco_4k_8k-5120x2880.jpg);
 }
 
 h1 {
