@@ -90,13 +90,13 @@ const DragDropUploadForm = () => {
       <Paper
         elevation={3}
         sx={{
-          width: 900,
+          width: "900px",
           margin: "auto",
           padding: 3,
           textAlign: "center",
           borderRadius: 2,
-          height: 600,
           marginLeft: "13%",
+          height: "calc(100vh - 100px)",
           overflowY: "auto",
         }}
       >

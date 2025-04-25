@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 const FineAndPayment = () => {
   const token = Cookies.get("token");
 
-  const [fineUser, setfineUser] = useState({});
+  const [fineUser, setFineUser] = useState({});
   const [selectedFine, setSelectedFine] = useState(null);
 
   const getFineDetails = async () => {
@@ -19,12 +19,16 @@ const FineAndPayment = () => {
         },
       });
       const data = await res.json();
-
-      setfineUser(data);
+      if (data?.fine === null) {
+        setFineUser({});
+      } else {
+        setFineUser(data);
+      }
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getFineDetails();
   }, []);
@@ -32,26 +36,31 @@ const FineAndPayment = () => {
   return (
     <>
       <div className='fine-and-payment-main-container d-flex gap-16'>
-        <div
-          className='fine-details-container d-flex-col gap-16'
-          style={{ cursor: "pointer" }}
-          onClick={() => setSelectedFine(fineUser)}
-        >
-          <img src={QrImage} width={250} height={250} alt='' />
-          <p>
-            <strong>Username:</strong> {fineUser?.username}
-          </p>
-          <p>
-            <strong>Vehicle Number: </strong>
-            {fineUser?.vehicle_no}
-          </p>
-          <p>
-            <strong>Payment Amount:</strong> {fineUser?.fine}
-          </p>
-          <p>
-            <strong>Mobile no:</strong> {fineUser?.number}
-          </p>
-        </div>
+        {fineUser?.length > 0 ? (
+          <div
+            className='fine-details-container d-flex-col gap-16'
+            style={{ cursor: "pointer" }}
+            onClick={() => setSelectedFine(fineUser)}
+          >
+            <img src={QrImage} width={250} height={250} alt='QR Code' />
+            <p>
+              <strong>Username:</strong> {fineUser?.username || "N/A"}
+            </p>
+            <p>
+              <strong>Vehicle Number: </strong>
+              {fineUser?.vehicle_no || "N/A"}
+            </p>
+            <p>
+              <strong>Payment Amount:</strong>{" "}
+              {fineUser?.fine ? fineUser.fine : "No fine available"}
+            </p>
+            <p>
+              <strong>Mobile no:</strong> {fineUser?.number || "N/A"}
+            </p>
+          </div>
+        ) : (
+          <h1>No fine Avalaible </h1>
+        )}
       </div>
 
       {selectedFine && (
@@ -60,16 +69,18 @@ const FineAndPayment = () => {
             <h3>Fine Details</h3>
             <img src={QrImage} width={250} height={250} alt='QR Code' />
             <p>
-              <strong>Username:</strong> {selectedFine?.username}
+              <strong>Username:</strong> {selectedFine?.username || "N/A"}
             </p>
             <p>
-              <strong>Vehicle Number:</strong> {selectedFine?.vehicle_no}
+              <strong>Vehicle Number:</strong>{" "}
+              {selectedFine?.vehicle_no || "N/A"}
             </p>
             <p>
-              <strong>Payment Amount:</strong> {selectedFine?.fine}
+              <strong>Payment Amount:</strong>{" "}
+              {selectedFine?.fine ? selectedFine.fine : "No fine available"}
             </p>
             <p>
-              <strong>Mobile no:</strong> {selectedFine?.number}
+              <strong>Mobile no:</strong> {selectedFine?.number || "N/A"}
             </p>
             <button onClick={() => setSelectedFine(null)}>Close</button>
           </div>
