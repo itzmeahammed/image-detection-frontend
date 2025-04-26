@@ -23,7 +23,7 @@ const DragDropUploadForm = () => {
   });
   const [invoiceData, setInvoiceData] = useState(null);
   const [openModal, setOpenModal] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false); // ✅ new state
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const token = Cookies.get("token");
 
@@ -88,19 +88,20 @@ const DragDropUploadForm = () => {
       style={{ height: "100vh", marginLeft: "13%" }}
     >
       <Paper
-        elevation={3}
+        elevation={6}
         sx={{
           width: "900px",
           margin: "auto",
           padding: 3,
           textAlign: "center",
-          borderRadius: 2,
+          borderRadius: 3,
           marginLeft: "13%",
           height: "calc(100vh - 100px)",
           overflowY: "auto",
+          backgroundColor: "#f5f5f5",
         }}
       >
-        <Typography variant='h5' sx={{ marginBottom: 1, fontWeight: "bold" }}>
+        <Typography variant='h4' sx={{ marginBottom: 2, fontWeight: "bold" }}>
           Report Traffic Violation
         </Typography>
 
@@ -121,6 +122,13 @@ const DragDropUploadForm = () => {
             variant='outlined'
             fullWidth
             required
+            sx={{
+              marginBottom: 2,
+              borderRadius: "8px",
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "8px",
+              },
+            }}
           />
 
           <TextField
@@ -133,6 +141,13 @@ const DragDropUploadForm = () => {
             fullWidth
             required
             InputLabelProps={{ shrink: true }}
+            sx={{
+              marginBottom: 2,
+              borderRadius: "8px",
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "8px",
+              },
+            }}
           />
 
           {!preview && (
@@ -140,19 +155,19 @@ const DragDropUploadForm = () => {
               {...getRootProps()}
               sx={{
                 border: "2px dashed #aaa",
-                // padding: 2,
-                // borderRadius: 2,
+                padding: 3,
+                borderRadius: "8px",
                 cursor: "pointer",
                 textAlign: "center",
-                padding: "16px",
-                borderRadius: "8px",
                 height: "250px",
                 width: "100%",
-                // cursor: "pointer",
-                texAalign: "center",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                transition: "border-color 0.3s ease",
+                "&:hover": {
+                  borderColor: "#4CAF50",
+                },
               }}
             >
               <input {...getInputProps()} />
@@ -166,7 +181,12 @@ const DragDropUploadForm = () => {
             <img
               src={preview}
               alt='Preview'
-              style={{ width: "64%", marginTop: 10, borderRadius: 5 }}
+              style={{
+                width: "80%",
+                marginTop: 10,
+                borderRadius: 8,
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+              }}
             />
           )}
 
@@ -174,7 +194,15 @@ const DragDropUploadForm = () => {
             type='submit'
             variant='contained'
             color='primary'
-            sx={{ marginTop: 2 }}
+            sx={{
+              marginTop: 2,
+              padding: "12px 30px",
+              borderRadius: "6px",
+              fontWeight: "bold",
+              "&:hover": {
+                backgroundColor: "#003b8f",
+              },
+            }}
           >
             Submit Report
           </Button>
@@ -182,6 +210,7 @@ const DragDropUploadForm = () => {
 
         <GifModal isLoading={isLoading} setisLoading={setIsLoading} />
 
+        {/* Violation Invoice Modal */}
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
           <Box
             sx={{
@@ -222,40 +251,19 @@ const DragDropUploadForm = () => {
                 </Typography>
               </Box>
 
-              <Box>
-                <Box
-                  sx={{
-                    backgroundColor: "#f9f9f9",
-                    padding: "15px",
-                    borderRadius: "8px",
-                    border: "1px solid #ddd",
-                  }}
-                >
-                  <Typography
-                    variant='h6'
-                    sx={{ fontWeight: "bold", color: "#333", marginBottom: 1 }}
-                  >
-                    Violation Details
-                  </Typography>
-
-                  <Box sx={{ marginBottom: 1 }}>
-                    <Typography variant='body1'>
-                      <strong>Reported By: &nbsp; </strong> {invoiceData?.name}
-                    </Typography>
-
-                    <Typography variant='body1'>
-                      <strong>Date:</strong> &nbsp; {invoiceData?.violationDate}
-                    </Typography>
-                    <Typography variant='body1'>
-                      <strong>Vehicle Number: &nbsp; </strong>
-                      {invoiceData?.vehicle_number}
-                    </Typography>
-                    <Typography variant='body1'>
-                      <strong>Violation Details: &nbsp; </strong>
-                      {invoiceData?.message}
-                    </Typography>
-                  </Box>
-                </Box>
+              <Box sx={{ marginBottom: 2 }}>
+                <Typography variant='h6' sx={{ fontWeight: "bold" }}>
+                  Reported By: {invoiceData?.name}
+                </Typography>
+                <Typography variant='body1'>
+                  <strong>Date:</strong> {invoiceData?.violationDate}
+                </Typography>
+                <Typography variant='body1'>
+                  <strong>Vehicle Number:</strong> {invoiceData?.vehicle_number}
+                </Typography>
+                <Typography variant='body1'>
+                  <strong>Violation Details:</strong> {invoiceData?.message}
+                </Typography>
               </Box>
 
               {invoiceData?.imageUrl && (
@@ -315,6 +323,7 @@ const DragDropUploadForm = () => {
           </Box>
         </Modal>
 
+        {/* Success Modal */}
         <Modal open={showSuccessModal}>
           <Box
             sx={{

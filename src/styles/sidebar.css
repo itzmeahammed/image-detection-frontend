@@ -1,79 +1,114 @@
+/* Sidebar container */
 .sidebar-container {
   height: 100vh;
-  width: 224px;
-  background-color: #1f2937;
+  width: 240px;
+  background-color: #000000;
+  /* Darker color for a sleek, professional feel */
   position: absolute;
   left: 0;
   top: 0;
   z-index: 1000;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px, rgba(0, 0, 0, 0.1) 0px 2px 10px;
 }
 
+/* Sidebar header */
 .sidebar-container .sidebar-header {
-  padding: 24px 0;
-  color: #fff;
-  font-size: 18px;
+  padding: 24px;
+  color: #ffffff;
+  font-size: 22px;
   font-weight: bold;
   letter-spacing: 0.5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 12px;
+  text-transform: uppercase;
 }
 
+/* Sidebar body */
+.sidebar-container .sidebar-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Sidebar body item */
 .sidebar-container .sidebar-body .sidebar-body-item {
   display: flex;
   align-items: center;
-  min-height: 48px;
-  padding: 10px;
-  color: #b0b0b0;
+  min-height: 56px;
+  padding: 12px 16px;
+  background-color: #2c3e50;
+  /* Darker item background */
+  color: #b0bec5;
+  /* Soft text color */
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.15px;
-  cursor: pointer;
   border-radius: 8px;
-  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .sidebar-container .sidebar-body .sidebar-body-item:hover {
-  background-color: #3b4a58;
-  color: #fff;
+  background-color: #34495e;
+  /* Slightly lighter on hover */
+  color: #ecf0f1;
+  /* Lighter text color on hover */
 }
 
 .sidebar-container .sidebar-body .sidebar-body-item.active {
-  background-color: #4a6d85;
-  color: #fff;
+  background-color: #1abc9c;
+  /* Bright color when active */
+  color: #ffffff;
+  /* Text color changes when active */
 }
 
+/* Sidebar links */
 .sidebar-container .sidebar-body a {
   text-decoration: none;
   color: inherit;
   display: inline-block;
-  margin-left: 10px;
+  margin-left: 12px;
+  font-weight: 600;
+}
+
+/* Sidebar footer */
+.sidebar-container .sidebar-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 16px;
 }
 
 .sidebar-container .sidebar-footer button {
-  background-color: #e50914;
+  background-color: #e74c3c;
+  /* Red background for the sign-out button */
   border: none;
-  color: #fff;
+  color: #ffffff;
   padding: 12px 20px;
   font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
+  width: 100%;
   transition: background-color 0.3s ease;
 }
 
 .sidebar-container .sidebar-footer button:hover {
-  background-color: #ba1a1a;
+  background-color: #c0392b;
+  /* Darker red on hover */
 }
 
+/* Sidebar images with hover effect */
 .sidebar-container .sidebar-body img {
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .sidebar-container .sidebar-body img:hover {
   transform: scale(1.1);
+  /* Image slightly grows on hover */
+  filter: brightness(1.2);
+  /* Brighten image on hover */
 }

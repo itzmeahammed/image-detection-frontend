@@ -1,41 +1,81 @@
+/* Main container for the traffic signs */
 .traffic-sign-main-container {
+  display: flex;
   flex-wrap: wrap;
-  margin-left: 300px;
+  gap: 16px;
+  margin: 50px 300px;
   padding: 50px;
+  justify-content: center;
   height: 100vh;
   overflow-y: auto;
+  width: 80%;
+  background-color: #f8f9fa;
+  /* Soft background color */
 }
 
-.traffic-sign-main-container .traffic-sign-container {
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  padding: 50px;
-  border-radius: 8px;
-  text-wrap: wrap;
-  width: 350px;
+/* Container for each individual traffic sign */
+.traffic-sign-container {
+  width: 300px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow */
+  padding: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  text-align: center;
 }
 
-.traffic-sign-main-container .traffic-sign-container:hover {
-  transform: scale(1.03);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-}
-.traffic-sign-main-container .traffic-sign-container img {
-  border-radius: 8px;
+.traffic-sign-container:hover {
+  transform: scale(1.05);
+  /* Slight scale effect on hover */
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+  /* Enhanced shadow on hover */
 }
 
-.traffic-sign-main-container .traffic-sign-container p {
-  color: var(#1e1e1e);
-  font-family: Poppins;
-  font-size: 16px;
+/* Traffic sign image styles */
+.traffic-sign-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.traffic-sign-image:hover {
+  transform: scale(1.1);
+  /* Slight grow effect on image hover */
+}
+
+/* Traffic sign name (title) */
+.traffic-sign-name {
+  font-size: 20px;
   font-weight: 600;
-  line-height: 24px;
+  color: #2c3e50;
+  /* Dark gray text color */
+  margin-top: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.traffic-sign-main-container .traffic-sign-container span {
-  color: var(#1e1e1e);
-  font-family: Poppins;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
+/* Description of the traffic sign */
+.traffic-sign-description {
+  font-size: 14px;
+  color: #7f8c8d;
+  /* Lighter gray for the content */
+  line-height: 1.6;
+  margin-top: 8px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .traffic-sign-main-container {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+
+  .traffic-sign-container {
+    width: 100%;
+  }
 }

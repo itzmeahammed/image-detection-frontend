@@ -91,7 +91,7 @@ export default function AuthForm() {
       <div className={`container ${isSignUp ? "right-panel-active" : ""}`}>
         <div className='form-container sign-up-container'>
           <form onSubmit={handleSubmit}>
-            <h1>Welcome to Traffic Watchdog</h1>
+            <h2>Sign in to create account</h2>
 
             <input
               type='text'

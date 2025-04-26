@@ -23,10 +23,11 @@ const Sidebar = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className='sidebar-container d-flex-jsb d-flex-col'>
+    <div className='sidebar-container  d-flex-col'>
       <div className='sidebar-header d-flex-full gap-8'>
         <img src={TrafficLogo} alt='Logo' width={48} height={48} />
-        <span>Traffic Watchdog</span>
+        <span>Traffic Guardian</span>{" "}
+        {/* Changed app name to "Traffic Guardian" */}
       </div>
 
       <div className='sidebar-body p-16'>
@@ -36,14 +37,12 @@ const Sidebar = () => {
           }`}
         >
           <img
-            src={
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX_OKaMUyivk6YaqLIso8eP1UD77Oyk-C59Q&s"
-            }
+            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX_OKaMUyivk6YaqLIso8eP1UD77Oyk-C59Q&s'
             alt='Map'
             width={24}
             height={24}
           />
-          <Link to='/map'>Traffic map</Link>
+          <Link to='/map'>Traffic Map</Link>
         </div>
 
         <div
@@ -52,7 +51,7 @@ const Sidebar = () => {
           }`}
         >
           <img src={GuideIcon} alt='Guide' width={24} height={24} />
-          <Link to='/guide'>Traffic guidelines</Link>
+          <Link to='/guide'>Traffic Guidelines</Link>
         </div>
 
         <div
@@ -61,7 +60,7 @@ const Sidebar = () => {
           }`}
         >
           <img src={FineIcon} alt='Fine' width={24} height={24} />
-          <Link to='/fine'>Fine and Payment</Link>
+          <Link to='/fine'>Fines & Payments</Link>
         </div>
 
         <div
@@ -75,7 +74,7 @@ const Sidebar = () => {
       </div>
 
       <div className='sidebar-footer d-flex-full p-16'>
-        <button onClick={handleSignOut}>Sign out</button>
+        <button onClick={handleSignOut}>Sign Out</button>
       </div>
     </div>
   );

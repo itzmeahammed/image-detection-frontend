@@ -13,11 +13,12 @@ body {
   height: 100vh;
   overflow: hidden;
 }
+
 .main-container {
   height: 100vh;
   width: 100%;
   background-size: contain;
-  background-image: url(https://www.hdwallpapers.in/download/night_traffic_san_francisco_4k_8k-5120x2880.jpg);
+  background-image: url(https://www.hdwallpapers.in/download/new_york_city_road_with_cars_4k_hd_new_york-3840x2160.jpg);
 }
 
 h1 {
@@ -50,8 +51,8 @@ a {
 
 button {
   border-radius: 20px;
-  border: 1px solid #ff4b2b;
-  background-color: #ff4b2b;
+  border: 1px solid #2b1a1e;
+  background-color: #2b1a1e;
   color: #ffffff;
   font-size: 12px;
   font-weight: bold;
@@ -137,6 +138,7 @@ input {
 }
 
 @keyframes show {
+
   0%,
   49.99% {
     opacity: 0;
@@ -168,7 +170,7 @@ input {
 .overlay {
   background: #ff416c;
   background: -webkit-linear-gradient(to right, #ff4b2b, #ff416c);
-  background: linear-gradient(to right, #ff4b2b, #ff416c);
+  background: linear-gradient(to right, #e9741d, #2b1a1e);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;

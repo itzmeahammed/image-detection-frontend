@@ -9,7 +9,6 @@ const Guidelines = () => {
       content:
         "This sign indicates that wearing a helmet is compulsory for two-wheeler riders. It aims to ensure rider safety and minimize head injuries during accidents. Helmets must be worn properly and securely fastened. This rule is enforced by law and must be followed strictly.",
     },
-
     {
       img: "https://media.istockphoto.com/id/1207567645/vector/u-turn-forbidden-road-sign.jpg?s=612x612&w=0&k=20&c=3NS7a31_qOIJDvtuaaF828AvIld0P7MJjZQKug-RBwA=",
       name: "NO U Turn",
@@ -64,9 +63,9 @@ const Guidelines = () => {
     <div className='traffic-sign-main-container d-flex gap-16'>
       {trafficSigns.map((val, key) => (
         <div className='traffic-sign-container d-flex-col gap-8 p-16' key={key}>
-          <img src={val?.img} alt='' width={250} height={250} />
-          <p>{val?.name}</p>
-          <span>{val?.content}</span>
+          <img src={val?.img} alt={val?.name} className='traffic-sign-image' />
+          <p className='traffic-sign-name'>{val?.name}</p>
+          <span className='traffic-sign-description'>{val?.content}</span>
         </div>
       ))}
     </div>
