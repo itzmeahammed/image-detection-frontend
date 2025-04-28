@@ -9,6 +9,7 @@ const FineAndPayment = () => {
 
   const [fineUser, setFineUser] = useState({});
   const [selectedFine, setSelectedFine] = useState(null);
+  console.log(fineUser);
 
   const getFineDetails = async () => {
     try {
@@ -36,7 +37,7 @@ const FineAndPayment = () => {
   return (
     <>
       <div className='fine-and-payment-main-container d-flex gap-16'>
-        {fineUser?.length > 0 ? (
+        {fineUser?.fine !== null ? (
           <div
             className='fine-details-container d-flex-col gap-16'
             style={{ cursor: "pointer" }}
